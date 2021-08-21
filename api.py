@@ -17,9 +17,9 @@ class Trigger(Resource):
         if current_session_id == '' or current_session_id == '0':
             return {}
 
-        accuracy, _ = analyze.analyze(session_id=current_session_id)
+        analyze.predict(session_id=current_session_id)
 
-        return accuracy
+        return {}
 
 
 api.add_resource(Trigger, '/')

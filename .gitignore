@@ -1,3 +1,5 @@
 .idea
 venv
 .vscode
+analytic/__pycache__/
+database/__pycache__/

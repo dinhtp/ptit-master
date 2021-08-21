@@ -1,16 +1,28 @@
 import pandas as pd
+from database import engine, connector
 
-from database import engine
+
+def update_prediction(session_id, prediction):
+    connection, cursor = connector.connect()
+    cursor.execute(
+        "UPDATE master_sale_session SET prediction = %s WHERE id = %s",
+        (prediction, session_id)
+    )
+    connection.commit()
+    connector.disconnect(connection=connection, cursor=cursor)
 
 
-def find_one(id):
+def find_one(id, loop_times):
     new_engine = engine.open_engine()
-    data = pd.read_sql(build_query(id), new_engine)
+    session = pd.read_sql(build_query(id), new_engine)
     engine.close_engine(mysql_engine=new_engine)
 
-    session_data = data.drop(['is_checkout_cart'], 1)
+    list_data = []
+    session_data = session.drop(['is_checkout_cart'], 1)
+    for _ in range(loop_times):
+        list_data.append(session_data)
 
-    return session_data
+    return pd.concat(list_data)
 
 
 def list_data():

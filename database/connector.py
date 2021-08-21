@@ -18,6 +18,6 @@ def connect():
     return db, db.cursor()
 
 
-def disconnect(cursor, connection):
+def disconnect(connection, cursor):
     cursor.close()
     connection.close()

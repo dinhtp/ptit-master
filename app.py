@@ -1,6 +1,4 @@
 import time
-
-from database import engine
 from analytic import source, analyze
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
@@ -23,7 +21,9 @@ model = RandomForestClassifier(
 
 model.fit(X_train, Y_train)
 
-prediction = model.predict(X_test)
+predict_data = X_test
+#predict_data = source.find_one('25', len(X_test))
+prediction = model.predict(predict_data)
 accuracy = metrics.accuracy_score(Y_test, prediction)
 features = source.get_feature_importance(
     model.feature_importances_,
