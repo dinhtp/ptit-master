@@ -1,0 +1,8 @@
+Flask
+flask-restful
+mysql-connector-python
+matplotlib
+sklearn
+pandas
+sqlalchemy
+pymysql
