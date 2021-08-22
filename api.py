@@ -14,8 +14,11 @@ class Trigger(Resource):
 
     def post(self):
         current_session_id = request.args.get('sessionId')
-        if current_session_id == '' or current_session_id == '0':
-            return {}
+        if current_session_id == '' or current_session_id == '0' or current_session_id == None:
+            current_session_id = request.json.get('sessionId')
+
+        if current_session_id == None:
+            return {"error": "Session id is required"}, 401
 
         analyze.predict(session_id=current_session_id)
 
